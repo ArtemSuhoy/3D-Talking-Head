@@ -1,0 +1,331 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 6422,
+      "max": [
+        0.5594056248664856,
+        -0.0026440988294780254,
+        1.0955992937088013
+      ],
+      "min": [
+        -0.5594056844711304,
+        -1.4428281784057617,
+        -0.9580548405647278
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 77064,
+      "componentType": 5126,
+      "count": 6422,
+      "max": [
+        0.9996923208236694,
+        0.999972939491272,
+        0.9965131878852844
+      ],
+      "min": [
+        -0.9996923208236694,
+        -1.0,
+        -0.9999865293502808
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 6422,
+      "max": [
+        1.1454907655715942,
+        1.1454907655715942
+      ],
+      "min": [
+        -0.04755210503935814,
+        -0.3095868229866028
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 30336,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 154128,
+      "componentType": 5126,
+      "count": 11134,
+      "max": [
+        0.30174678564071655,
+        -0.3142523467540741,
+        -0.13934439420700073
+      ],
+      "min": [
+        -0.30174678564071655,
+        -0.5003764033317566,
+        -0.3278021514415741
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 287736,
+      "componentType": 5126,
+      "count": 11134,
+      "max": [
+        0.999909520149231,
+        0.9998395442962646,
+        1.0
+      ],
+      "min": [
+        -0.999909520149231,
+        -0.999909520149231,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 51376,
+      "componentType": 5126,
+      "count": 11134,
+      "max": [
+        1.006398320198059,
+        1.0000001192092896
+      ],
+      "min": [
+        -0.006398189812898636,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 121344,
+      "componentType": 5125,
+      "count": 31104,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "DEGUIDER (https://sketchfab.com/DEGUIDER)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/realistic-male-head-6a480c4603cd4768b615393e93dbd7d0",
+      "title": "Realistic Male Head"
+    },
+    "generator": "Sketchfab-11.49.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 245760,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 140448,
+      "byteOffset": 245760,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 421344,
+      "byteOffset": 386208,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 807552,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7464523201337545,
+          0.7464523201337545,
+          0.7464523201337545,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.5445379192200918
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Eye_Ball",
+      "pbrMetallicRoughness": {
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.02
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3,
+        5
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        0.45662635564804077,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.45662635564804077,
+        0.0,
+        0.0,
+        -0.45662635564804077,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        1.0
+      ],
+      "name": "Head_5"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_4"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        0.45662635564804077,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.45662635564804077,
+        0.0,
+        0.0,
+        -0.45662635564804077,
+        0.0,
+        0.0,
+        0.0,
+        0.5,
+        0.0,
+        1.0
+      ],
+      "name": "Eyes_6"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_6"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
