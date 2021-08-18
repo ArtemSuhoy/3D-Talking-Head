@@ -12,13 +12,12 @@
         import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
 
         import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js';
-
-		import { GLTFLoader } from 'https://unpkg.com/three@0.126.1/examples/jsm/loaders/GLTFLoader.js';
+		
         import { FBXLoader } from 'https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js';
-       
+        import { GLTFLoader } from 'https://unpkg.com/three@0.126.1/examples/jsm/loaders/GLTFLoader.js';
 
 			let camera, scene, renderer;
-            let stats;
+            // let stats;
 
 			const clock = new THREE.Clock();
 
@@ -66,34 +65,26 @@
 				scene.add( grid );
 
 				// model
-				// const loader = new GLTFLoader();
-				// loader.load( 'male/scene.gltf', function ( object ) {
+				const loader = new GLTFLoader();
+				loader.load( './female/scene.gltf', function ( object ) {
 
-				// 	mixer = new THREE.AnimationMixer( object );
+					mixer = new THREE.AnimationMixer( object );
 
-				// 	const action = mixer.clipAction( object.animations[ 0 ] );
-				// 	action.play();
+					const action = mixer.clipAction( object.animations[ 0 ] );
+					action.play();
 
-				// 	object.traverse( function ( child ) {
+					object.traverse( function ( child ) {
 
-				// 		if ( child.isMesh ) {
+						if ( child.isMesh ) {
 
-				// 			child.castShadow = true;
-				// 			child.receiveShadow = true;
+							child.castShadow = true;
+							child.receiveShadow = true;
 
-				// 		}
+						}
 
-				// 	} );
+					} );
 
-				const loader =  THREE.GLTFLoader();
-
-				loader.load( 'male/scene.gltf', function ( gltf ) {
-
-					scene.add( gltf.scene );
-
-				}, undefined, function ( error ) {
-
-					console.error( error );
+					scene.add( object );
 
 				} );
 
