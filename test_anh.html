@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - FBX loader</title>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+		/>
+		<style>
+			body {
+				margin: 0px;
+			}
+			canvas {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="/3D-Talking-Head/three/build/three.js"></script>
+		<script
+			type="module"
+			src="/3D-Talking-Head/three/examples/jsm/loaders/GLTFLoader.js"
+		></script>
+
+		<script type="module">
+			// import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
+
+			// import { GLTFLoader } from 'https://unpkg.com/three@0.126.1/examples/jsm/loaders/GLTFLoader.js';
+			// import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js';
+			// import { FBXLoader } from 'https://unpkg.com/three@0.126.1/examples/jsm/loaders/FBXLoader.js';
+
+			import * as THREE from "/3D-Talking-Head/three/build/three.module.js";
+			import { GLTFLoader } from "/3D-Talking-Head/three/examples/jsm/loaders/GLTFLoader.js";
+			import { OrbitControls } from "/3D-Talking-Head/three/examples/jsm/controls/OrbitControls.js";
+			// import { FBXLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/FBXLoader.js';
+
+			let scene, camera, renderer, hlight, male;
+
+			scene = new THREE.Scene();
+
+			camera = new THREE.PerspectiveCamera(
+				75,
+				window.innerWidth / window.innerHeight,
+				0.1,
+				1000
+			);
+
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+
+			var loader = new GLTFLoader();
+
+			var obj;
+
+			loader.load("head/scene.gltf", function (gltf) {
+				obj = gltf.scene;
+				scene.add(gltf.scene);
+			});
+			scene.background = new THREE.Color(0xffffff);
+			var light = new THREE.HemisphereLight(0xffffff, 0x000000, 15);
+			scene.add(light);
+			camera.position.set(0, 10, 30);
+			function animate() {
+				requestAnimationFrame(animate);
+				renderer.render(scene, camera);
+			}
+
+			animate();
+		</script>
+	</body>
+</html>
