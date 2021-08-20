@@ -18,29 +18,14 @@
         
     
 
-        let scene, camera, controls, renderer, loader, root, light, eyes;
-        let x, y;
+        let scene, camera, controls, renderer, loader, root, light, eye1, eye2;
+        let x = 0, y = 0;
 
         function init(){
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xdddddd);
             camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 0.1, 2000);
-           
-
-            // loader = new GLTFLoader();
-            // loader.load('male/scene.gltf', function(gltf){
-            //     console.log(gltf);
-            
-            //     root = gltf.scene.children[0];
-            //     root.scale.set(5, 5, 5);
-            //     scene.add(gltf.scene);
-            //     renderer.render(scene, camera);
-
-            // }, function(xhr){
-            //     console.log((xhr.loaded/xhr.total * 100) + "% loader")
-            // }, function(error){
-            //     console.log('An error occurred')
-            // });
+        
             
             
             loader = new GLTFLoader();
@@ -64,9 +49,9 @@
             loader.load('eyes/scene.gltf', function(gltf){
                 console.log(gltf);
             
-                eyes = gltf.scene.children[0];
-                eyes.scale.set(0.01, 0.01, 0.01);
-                eyes.position.set(-0.47 , 0.63, -0.93);
+                eye1 = gltf.scene.children[0];
+                eye1.scale.set(0.01, 0.01, 0.01);
+                eye1.position.set(-0.47 , 0.63, -0.93);
                 scene.add(gltf.scene);
                 renderer.render(scene, camera);
 
@@ -76,19 +61,20 @@
                 console.log('An error occurred')
             });
 
-            // loader = new FBXLoader();
-            // loader.load('female/source/Angelica.fbx', function(fbx){
-            //     console.log(fbx);
-            //     root = fbx.scene.children[0];
-            //     root.scale.set(5, 5, 5);
-            //     scene.add(fbx.scene);
-            //     renderer.render(scene, camera);
+            loader.load('eyes/scene.gltf', function(gltf){
+                console.log(gltf);
+            
+                eye2 = gltf.scene.children[0];
+                eye2.scale.set(0.01, 0.01, 0.01);
+                eye2.position.set(0.47 , 0.63, -0.93);
+                scene.add(gltf.scene);
+                renderer.render(scene, camera);
 
-            // }, function(xhr){
-            //     console.log((xhr.loaded/xhr.total * 100) + "% loader")
-            // }, function(error){
-            //     console.log('An error occurred')
-            // });
+            }, function(xhr){
+                console.log((xhr.loaded/xhr.total * 100) + "% loader")
+            }, function(error){
+                console.log('An error occurred')
+            });
 
 
             light = new THREE.DirectionalLight(0xffffff, 1);
@@ -99,6 +85,7 @@
              x = event.x;   
              y = event.y;
             console.log(`${x} + ${y}`);
+            
             }
 
 
@@ -121,8 +108,18 @@
                 controls.update();
                 renderer.render(scene, camera);
                 
-                eyes.rotation.x = x * 0.01;
-                eyes.rotation.z = y * 0.01 - 50;
+                
+                if( x <= 800 && x >= 470){
+                    eye1.rotation.z = -(x * 0.003) +(-0,93); // 0.0025
+                    eye2.rotation.z = -(x * 0.003) +(-0,93); // 0.0025
+                    console.log(`eye1 rotation ${eye1.rotation.z}`)
+                }
+
+                if( y >= 190 && y <= 260){
+                    eye1.rotation.x = (y * 0.01) - 0.63; 
+                    eye2.rotation.x = (y * 0.01) - 0.63;  
+                }
+                
             }
 
             animate()
