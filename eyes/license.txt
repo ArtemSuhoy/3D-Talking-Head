@@ -1,0 +1,11 @@
+Model Information:
+* title:	eye for free
+* source:	https://sketchfab.com/3d-models/eye-for-free-740d560f95e748fdb54bc2a77e6f4ad7
+* author:	schteppn (https://sketchfab.com/schteppn)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "eye for free" (https://sketchfab.com/3d-models/eye-for-free-740d560f95e748fdb54bc2a77e6f4ad7) by schteppn (https://sketchfab.com/schteppn) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
