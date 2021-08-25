@@ -16,7 +16,16 @@
 
 			import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
 
-			let scene, camera, controls, renderer, loader, root, light, eye1, eye2;
+			let scene,
+				camera,
+				controls,
+				renderer,
+				loader,
+				root,
+				light,
+				eye1,
+				eye2,
+				mouth;
 			let x = 0,
 				y = 0;
 
@@ -127,6 +136,25 @@
 						eye2.rotation.x = y * 0.01 - 0.63;
 					}
 				}
+
+				loader.load(
+					"mouth/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
+
+						mouth = gltf.scene.children[0];
+						mouth.scale.set(0.5, 0.5, 0.5);
+						mouth.position.set(-0.6, -0.7, -0.46);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
 
 				animate();
 			}
