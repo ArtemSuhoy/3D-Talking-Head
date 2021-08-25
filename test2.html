@@ -79,11 +79,6 @@
 						eye2.position.set(0.47, 0.63, -0.93);
 						scene.add(gltf.scene);
 						renderer.render(scene, camera);
-
-						root = gltf.scene.children[0];
-						root.scale.set(5, 5, 5);
-						scene.add(gltf.scene);
-						renderer.render(scene, camera);
 					},
 					function (xhr) {
 						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
@@ -96,12 +91,6 @@
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
-
-				renderer = new THREE.WebGLRenderer({ antialias: true });
-				renderer.setSize(window.innerWidth, window.innerHeight);
-				renderer.shadowMap.enabled = true;
-				renderer.gammaOuput = true;
-				renderer.render(scene, camera);
 
 				document.onmousemove = function (event) {
 					x = event.x;
