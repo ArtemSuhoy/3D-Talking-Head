@@ -156,6 +156,12 @@
 					}
 				);
 
+				//--------------------talking api
+				function talk() {
+					speechSynthesis.speak(
+						new SpeechSynthesisUtterance("Hello, my name is Vasya")
+					);
+				}
 				animate();
 			}
 
