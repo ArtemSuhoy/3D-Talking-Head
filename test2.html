@@ -1,133 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    <script href="webgazer.js" type="text/javascript" ></script>
-    <script type="module">
-        import * as THREE from '/three/build/three.module.js';
-        import { GLTFLoader } from '/three/examples/jsm/loaders/GLTFLoader.js';
-        import { FBXLoader } from '/three/examples/jsm/loaders/FBXLoader.js';
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="module">
+			import * as THREE from "/three/build/three.module.js";
+			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
+			import { FBXLoader } from "/three/examples/jsm/loaders/FBXLoader.js";
 
-        import { OrbitControls } from '/three/examples/jsm/controls/OrbitControls.js';
-        
-    
+			import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
 
-        let scene, camera, controls, renderer, loader, root, light, eye1, eye2;
-        let x = 0, y = 0;
+			let scene,
+				camera,
+				controls,
+				renderer,
+				loader,
+				root,
+				light,
+				eye1,
+				eye2,
+				mouth;
+			let x = 0,
+				y = 0;
 
-        function init(){
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xdddddd);
-            camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 0.1, 2000);
-        
-            
-            
-            loader = new GLTFLoader();
-            loader.load('male/scene.gltf', function(gltf){
-                console.log(gltf);
-            
-                root = gltf.scene.children[0];
-                root.scale.set(5, 5, 5);
-                root.position.set(0,-2.4,0);
-                scene.add(gltf.scene);
-                renderer.render(scene, camera);
+			function init() {
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color(0xdddddd);
+				camera = new THREE.PerspectiveCamera(
+					40,
+					window.innerWidth / window.innerHeight,
+					0.1,
+					2000
+				);
 
-            }, function(xhr){
-                console.log((xhr.loaded/xhr.total * 100) + "% loader")
-            }, function(error){
-                console.log('An error occurred')
-            });
+				loader = new GLTFLoader();
+				loader.load(
+					"male/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
 
+						root = gltf.scene.children[0];
+						root.scale.set(5, 5, 5);
+						root.position.set(0, -2.4, 0);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
 
-            
-            loader.load('eyes/scene.gltf', function(gltf){
-                console.log(gltf);
-            
-                eye1 = gltf.scene.children[0];
-                eye1.scale.set(0.01, 0.01, 0.01);
-                eye1.position.set(-0.47 , 0.63, -0.93);
-                scene.add(gltf.scene);
-                renderer.render(scene, camera);
+				loader.load(
+					"eyes/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
 
-            }, function(xhr){
-                console.log((xhr.loaded/xhr.total * 100) + "% loader")
-            }, function(error){
-                console.log('An error occurred')
-            });
+						eye1 = gltf.scene.children[0];
+						eye1.scale.set(0.01, 0.01, 0.01);
+						eye1.position.set(-0.47, 0.63, -0.93);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
 
-            loader.load('eyes/scene.gltf', function(gltf){
-                console.log(gltf);
-            
-                eye2 = gltf.scene.children[0];
-                eye2.scale.set(0.01, 0.01, 0.01);
-                eye2.position.set(0.47 , 0.63, -0.93);
-                scene.add(gltf.scene);
-                renderer.render(scene, camera);
+				loader.load(
+					"eyes/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
 
-            }, function(xhr){
-                console.log((xhr.loaded/xhr.total * 100) + "% loader")
-            }, function(error){
-                console.log('An error occurred')
-            });
+						eye2 = gltf.scene.children[0];
+						eye2.scale.set(0.01, 0.01, 0.01);
+						eye2.position.set(0.47, 0.63, -0.93);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
+				loader.load(
+					"mouth/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
 
+						mouth = gltf.scene.children[0];
+						mouth.scale.set(0.31, 0.31, 0.31);
+						mouth.position.set(0, -0.3, -0.51);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
 
-            light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(2,2,5);
-            scene.add(light);
+				light = new THREE.DirectionalLight(0xffffff, 1);
+				light.position.set(2, 2, 5);
+				scene.add(light);
 
-            document.onmousemove = function(event){
-             x = event.x;   
-             y = event.y;
-            console.log(`${x} + ${y}`);
-            
-            }
+				document.onmousemove = function (event) {
+					x = event.x;
+					y = event.y;
+					console.log(`${x} + ${y}`);
+				};
 
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.shadowMap.enabled = true;
+				renderer.gammaOuput = true;
+				renderer.render(scene, camera);
 
-            renderer = new THREE.WebGLRenderer({antialias:true});
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.shadowMap.enabled = true;
-            renderer.gammaOuput = true;
-            renderer.render(scene, camera);
-            
+				controls = new OrbitControls(camera, renderer.domElement);
+				camera.position.set(0, 0, 5);
+				camera.lookAt(0, 0, 0);
+				controls.update();
 
-            controls = new OrbitControls( camera, renderer.domElement );
-            camera.position.set(0, 0, 5);
-            camera.lookAt(0,0,0);
-            controls.update();
-            
-            document.body.appendChild(renderer.domElement);
+				document.body.appendChild(renderer.domElement);
 
-            function animate(){
-                window.requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-                
-                
-                if( x <= 800 && x >= 470){
-                    eye1.rotation.z = -(x * 0.003) +(-0,93); // 0.0025
-                    eye2.rotation.z = -(x * 0.003) +(-0,93); // 0.0025
-                    console.log(`eye1 rotation ${eye1.rotation.z}`)
-                }
+				function animate() {
+					window.requestAnimationFrame(animate);
+					controls.update();
+					renderer.render(scene, camera);
 
-                if( y >= 190 && y <= 260){
-                    eye1.rotation.x = (y * 0.01) - 0.63; 
-                    eye2.rotation.x = (y * 0.01) - 0.63;  
-                }
-                
-            }
+					if (x <= 800 && x >= 470) {
+						eye1.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
+						eye2.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
+						console.log(`eye1 rotation ${eye1.rotation.z}`);
+					}
 
-            animate()
-            
-        }
+					if (y >= 190 && y <= 260) {
+						eye1.rotation.x = y * 0.01 - 0.63;
+						eye2.rotation.x = y * 0.01 - 0.63;
+					}
+				}
 
-        init();
+				animate();
+			}
 
-    </script>
-</body>
+			init();
+		</script>
+	</body>
 </html>
