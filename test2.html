@@ -8,7 +8,14 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<script href="webgazer.js" type="text/javascript"></script>
+		<button onclick="talk()">Add</button>
+		<script>
+			function talk() {
+				speechSynthesis.speak(
+					new SpeechSynthesisUtterance("Hello, my name is Vasya")
+				);
+			}
+		</script>
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
@@ -156,15 +163,8 @@
 					}
 				);
 
-				//--------------------talking api
-				function talk() {
-					speechSynthesis.speak(
-						new SpeechSynthesisUtterance("Hello, my name is Vasya")
-					);
-				}
 				animate();
 			}
-
 			init();
 		</script>
 	</body>
