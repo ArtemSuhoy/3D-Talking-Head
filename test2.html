@@ -8,14 +8,11 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<!-- <button onclick="talk()">Add</button> -->
-		<script>
+		<!-- <script>
 			function talk() {
-				speechSynthesis.speak(
-					new SpeechSynthesisUtterance("Привет, я Саша Пупкин")
-				);
+				speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 			}
-		</script>
+		</script> -->
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
@@ -37,7 +34,8 @@
 				y = 0;
 			var synth = window.speechSynthesis;
 			var voices = synth.getVoices();
-			let text = "Я так задолбалась";
+			const text =
+				"И снится нам не рокот космодрома.. Не эта ледяная синева. А снится нам трава, трава у дома.. Зеленая, зеленая трава.";
 
 			function init() {
 				scene = new THREE.Scene();
@@ -118,8 +116,10 @@
 						scene.add(gltf.scene);
 						renderer.render(scene, camera);
 						document.onclick = function talk() {
-							let speech = new SpeechSynthesisUtterance(text);
+							const speech = new SpeechSynthesisUtterance(text);
+							speech.lang = "ru-RU";
 							speech.pitch = 0.1;
+							speech.voice = voices[10];
 							speechSynthesis.speak(speech);
 						};
 					},
