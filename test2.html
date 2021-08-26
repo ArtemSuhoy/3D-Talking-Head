@@ -8,23 +8,13 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<button onclick="talk()">Add</button>
+		<!-- <button onclick="talk()">Add</button> -->
 		<script>
 			function talk() {
 				speechSynthesis.speak(
-					new SpeechSynthesisUtterance("Hello, my name is Vasya")
+					new SpeechSynthesisUtterance("Привет, я Саша Пупкин")
 				);
 			}
-		</script>
-		<script>
-			let x = 0;
-			let y = 0;
-
-			document.onmousemove = function (event) {
-				x = event.x;
-				y = event.y;
-				console.log(`${x} + ${y}`);
-			};
 		</script>
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
@@ -45,6 +35,9 @@
 				mouth;
 			let x = 0,
 				y = 0;
+			var synth = window.speechSynthesis;
+			var voices = synth.getVoices();
+			let text = "Я так задолбалась";
 
 			function init() {
 				scene = new THREE.Scene();
@@ -113,6 +106,7 @@
 						console.log("An error occurred");
 					}
 				);
+
 				loader.load(
 					"mouth/scene.gltf",
 					function (gltf) {
@@ -123,6 +117,11 @@
 						mouth.position.set(0, -0.3, -0.51);
 						scene.add(gltf.scene);
 						renderer.render(scene, camera);
+						document.onclick = function talk() {
+							let speech = new SpeechSynthesisUtterance(text);
+							speech.pitch = 0.1;
+							speechSynthesis.speak(speech);
+						};
 					},
 					function (xhr) {
 						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
@@ -131,7 +130,6 @@
 						console.log("An error occurred");
 					}
 				);
-
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
