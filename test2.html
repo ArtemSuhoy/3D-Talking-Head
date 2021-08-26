@@ -8,8 +8,14 @@
 		<title>Document</title>
 	</head>
 	<body>
-<<<<<<< HEAD
 		<button onclick="talk()">Add</button>
+		<script>
+			function talk() {
+				speechSynthesis.speak(
+					new SpeechSynthesisUtterance("Hello, my name is Vasya")
+				);
+			}
+		</script>
 		<script>
 			let x = 0;
 			let y = 0;
@@ -19,16 +25,7 @@
 				y = event.y;
 				console.log(`${x} + ${y}`);
 			};
-			function talk() {
-				if (x < 820 && x > 640 && y < 480 && y > 409) {
-					speechSynthesis.speak(
-						new SpeechSynthesisUtterance("Hello, my name is Vasya")
-					);
-				}
-			}
 		</script>
-=======
->>>>>>> main
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
@@ -116,8 +113,6 @@
 						console.log("An error occurred");
 					}
 				);
-<<<<<<< HEAD
-=======
 				loader.load(
 					"mouth/scene.gltf",
 					function (gltf) {
@@ -136,7 +131,6 @@
 						console.log("An error occurred");
 					}
 				);
->>>>>>> main
 
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
@@ -145,11 +139,7 @@
 				document.onmousemove = function (event) {
 					x = event.x;
 					y = event.y;
-<<<<<<< HEAD
-					// console.log(`${x} + ${y}`);
-=======
 					console.log(`${x} + ${y}`);
->>>>>>> main
 				};
 
 				renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -173,11 +163,7 @@
 					if (x <= 800 && x >= 470) {
 						eye1.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
 						eye2.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
-<<<<<<< HEAD
-						// console.log(`eye1 rotation ${eye1.rotation.z}`);
-=======
 						console.log(`eye1 rotation ${eye1.rotation.z}`);
->>>>>>> main
 					}
 
 					if (y >= 190 && y <= 260) {
@@ -186,31 +172,8 @@
 					}
 				}
 
-<<<<<<< HEAD
-				loader.load(
-					"mouth/scene.gltf",
-					function (gltf) {
-						console.log(gltf);
-
-						mouth = gltf.scene.children[0];
-						mouth.scale.set(0.35, 0.35, 0.35);
-						mouth.position.set(0, -0.3, -0.57);
-						scene.add(gltf.scene);
-						renderer.render(scene, camera);
-					},
-					function (xhr) {
-						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
-					},
-					function (error) {
-						console.log("An error occurred");
-					}
-				);
-
-=======
->>>>>>> main
 				animate();
 			}
-
 			init();
 		</script>
 	</body>
