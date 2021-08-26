@@ -8,24 +8,11 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<button onclick="talk()">Add</button>
-		<script>
+		<!-- <script>
 			function talk() {
-				speechSynthesis.speak(
-					new SpeechSynthesisUtterance("Hello, my name is Vasya")
-				);
+				speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 			}
-		</script>
-		<script>
-			let x = 0;
-			let y = 0;
-
-			document.onmousemove = function (event) {
-				x = event.x;
-				y = event.y;
-				console.log(`${x} + ${y}`);
-			};
-		</script>
+		</script> -->
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
@@ -45,6 +32,10 @@
 				mouth;
 			let x = 0,
 				y = 0;
+			var synth = window.speechSynthesis;
+			var voices = synth.getVoices();
+			const text =
+				"И снится нам не рокот космодрома.. Не эээта ледянаая синеваа. А снится нам трава, трава у дома.. Зеленая, зелёная трава.";
 
 			function init() {
 				scene = new THREE.Scene();
@@ -113,6 +104,7 @@
 						console.log("An error occurred");
 					}
 				);
+
 				loader.load(
 					"mouth/scene.gltf",
 					function (gltf) {
@@ -123,6 +115,14 @@
 						mouth.position.set(0, -0.3, -0.51);
 						scene.add(gltf.scene);
 						renderer.render(scene, camera);
+						document.onclick = function talk() {
+							const speech = new SpeechSynthesisUtterance(text);
+							speech.lang = "ru-RU";
+							speech.pitch = 0.1;
+							speech.rate = 0.9;
+							speech.voice = voices[60];
+							speechSynthesis.speak(speech);
+						};
 					},
 					function (xhr) {
 						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
@@ -131,7 +131,6 @@
 						console.log("An error occurred");
 					}
 				);
-
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
