@@ -8,6 +8,24 @@
 		<title>Document</title>
 	</head>
 	<body>
+		<button onclick="talk()">Add</button>
+		<script>
+			function talk() {
+				speechSynthesis.speak(
+					new SpeechSynthesisUtterance("Hello, my name is Vasya")
+				);
+			}
+		</script>
+		<script>
+			let x = 0;
+			let y = 0;
+
+			document.onmousemove = function (event) {
+				x = event.x;
+				y = event.y;
+				console.log(`${x} + ${y}`);
+			};
+		</script>
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
@@ -156,7 +174,6 @@
 
 				animate();
 			}
-
 			init();
 		</script>
 	</body>

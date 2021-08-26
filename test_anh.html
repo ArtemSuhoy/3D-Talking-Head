@@ -31,23 +31,37 @@
 			// // import { FBXLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/FBXLoader.js';
 
 			let scene, camera, renderer, hlight, male;
+			function init() {
+				scene = new THREE.Scene();
 
-			scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(
+					75,
+					window.innerWidth / window.innerHeight,
+					0.1,
+					1000
+				);
 
-			camera = new THREE.PerspectiveCamera(
-				75,
-				window.innerWidth / window.innerHeight,
-				0.1,
-				1000
-			);
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				document.body.appendChild(renderer.domElement);
 
-			renderer = new THREE.WebGLRenderer();
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			document.body.appendChild(renderer.domElement);
+				var loader = new GLTFLoader();
 
-			var loader = new GLTFLoader();
+				var obj;
 
-			var obj;
+				loader.load("head/scene.gltf", function (gltf) {
+					obj = gltf.scene;
+					scene.add(gltf.scene);
+				});
+				scene.background = new THREE.Color(0xffffff);
+				var light = new THREE.HemisphereLight(0xffffff, 0x000000, 15);
+				scene.add(light);
+				camera.position.set(0, 10, 30);
+				function animate() {
+					requestAnimationFrame(animate);
+					renderer.render(scene, camera);
+					obj.rotation.y += 0.006;
+				}
 
 			loader.load("head/scene.gltf", function (gltf) {
 				obj = gltf.scene;
@@ -62,8 +76,7 @@
 				renderer.render(scene, camera);
 				obj.rotation.y += 0.01;
 			}
-
-			animate();
+			init();
 		</script>
 	</body>
 </html>
