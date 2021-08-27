@@ -29,9 +29,14 @@
 				light,
 				eye1,
 				eye2,
+				scalePlus,
+				scaleMinus,
+				reverse,
 				mouth;
 			let x = 0,
 				y = 0;
+			let max = 0.31;
+			let min = 0.2;
 			var synth = window.speechSynthesis;
 			var voices = synth.getVoices();
 			const text =
@@ -169,10 +174,17 @@
 						eye1.rotation.x = y * 0.01 - 0.63;
 						eye2.rotation.x = y * 0.01 - 0.63;
 					}
+					scaleMinus = () => {
+						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
+							mouth.scale.x -= 0.0005;
+						}
+					};
+					scaleMinus();
 				}
 
 				animate();
 			}
+
 			init();
 		</script>
 	</body>
