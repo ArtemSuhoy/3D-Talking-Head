@@ -33,10 +33,12 @@
 				scaleMinus,
 				reverse,
 				mouth;
+
 			let x = 0,
 				y = 0;
-			let max = 0.31;
-			let min = 0.2;
+
+			let scalePlus, scaleMinus;
+
 			var synth = window.speechSynthesis;
 			var voices = synth.getVoices();
 			const text =
@@ -136,6 +138,21 @@
 						console.log("An error occurred");
 					}
 				);
+
+				scalePlus = () => {
+					if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
+						mouth.scale.x -= 0.005;
+					} else if (mouth.scale.x <= 0.31) {
+						scalePlus = () => {
+							mouth.scale.x += 0.005;
+						};
+					}
+				};
+
+				// scaleMinus = () => {
+				// 	mouth.scale.x += 0.005;
+				// }
+
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
@@ -174,14 +191,12 @@
 						eye1.rotation.x = y * 0.01 - 0.63;
 						eye2.rotation.x = y * 0.01 - 0.63;
 					}
-					scaleMinus = () => {
-						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
-							mouth.scale.x -= 0.0005;
-						}
-					};
-					scaleMinus();
-				}
 
+					scalePlus();
+					if (mouth.scale.x >= 0.31) {
+						scalePlus = 0;
+					}
+				}
 				animate();
 			}
 
