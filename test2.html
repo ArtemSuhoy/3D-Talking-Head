@@ -37,8 +37,6 @@
 			let x = 0,
 				y = 0;
 
-			let scalePlus, scaleMinus;
-
 			var synth = window.speechSynthesis;
 			var voices = synth.getVoices();
 			const text =
@@ -141,7 +139,7 @@
 
 				scalePlus = () => {
 					if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
-						mouth.scale.x -= 0.005;
+						mouth.scale.x -= 0.05;
 					} else if (mouth.scale.x <= 0.31) {
 						scalePlus = () => {
 							mouth.scale.x += 0.005;
@@ -149,10 +147,10 @@
 					}
 				};
 
-				// scaleMinus = () => {
-				// 	mouth.scale.x += 0.005;
-				// }
-
+				scaleMinus = () => {
+					mouth.scale.x += 0.005;
+				};
+				setInterval(scalePlus, 100);
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
