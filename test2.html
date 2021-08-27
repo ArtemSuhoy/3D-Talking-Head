@@ -6,6 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="style.css" />
 		<title>Document</title>
+		<style>
+			#myDiv {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+			}
+		</style>
 	</head>
 	<body>
 		<!-- <script>
@@ -13,13 +22,17 @@
 				speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 			}
 		</script> -->
+		<div id="myDiv"></div>
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
 			import { FBXLoader } from "/three/examples/jsm/loaders/FBXLoader.js";
 
 			import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
-
+			const clickEvent = document.getElementById("myDiv");
+			clickEvent.onclick = function () {
+				decision = !decision;
+			};
 			let scene,
 				camera,
 				controls,
@@ -29,17 +42,20 @@
 				light,
 				eye1,
 				eye2,
+				scalePlus,
+				scaleMinus,
+				reverse,
+				talk,
 				mouth;
 
 			let x = 0,
 				y = 0;
-
-			let scalePlus, scaleMinus;
+			let decision = false;
 
 			var synth = window.speechSynthesis;
 			var voices = synth.getVoices();
 			const text =
-				"И снится нам не рокот космодрома.. Не эээта ледянаая синеваа. А снится нам трава, трава у дома.. Зеленая, зелёная трава.";
+				"И снится нам не рокот космодрома.. Не ээта ледянаая синеваа. А снится нам трава, трава у дома.. Зеленая, зелёная трава.";
 
 			function init() {
 				scene = new THREE.Scene();
@@ -113,7 +129,6 @@
 					"mouth/scene.gltf",
 					function (gltf) {
 						console.log(gltf);
-
 						mouth = gltf.scene.children[0];
 						mouth.scale.set(0.31, 0.31, 0.31);
 						mouth.position.set(0, -0.3, -0.51);
@@ -123,6 +138,7 @@
 							const speech = new SpeechSynthesisUtterance(text);
 							speech.lang = "ru-RU";
 							speech.pitch = 0.1;
+							speech.voice = voices[10];
 							speech.rate = 0.9;
 							speech.voice = voices[60];
 							speechSynthesis.speak(speech);
@@ -135,24 +151,34 @@
 						console.log("An error occurred");
 					}
 				);
-
-
-				scalePlus = () =>{
-					if(mouth.scale.x <= 0.31 && mouth.scale.x > 0.20){
-						mouth.scale.x -= 0.005;
-					} else if(mouth.scale.x <= 0.31){
-						scalePlus = () => {
-							mouth.scale.x += 0.005;
+				talk = () => {
+					if (decision == false) {
+						talk = null;
+					} else {
+						const speech = new SpeechSynthesisUtterance(text);
+						speech.lang = "ru-RU";
+						speech.pitch = 0.1;
+						speech.rate = 0.9;
+						speech.voice = voices[60];
+						speechSynthesis.speak(speech);
+						console.log("dcfgvhbjnk");
+					}
+				};
+				scalePlus = () => {
+					if (decision == false) {
+						scalePlus = null;
+					} else {
+						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
+							mouth.scale.x -= 0.04;
+						} else if (mouth.scale.x <= 0.31) {
+							scalePlus = () => {
+								mouth.scale.x += 0.04;
+							};
 						}
 					}
+				};
 
-				}
-
-				// scaleMinus = () => {
-				// 	mouth.scale.x += 0.005;
-				// }
-
-
+				setInterval(scalePlus, 100);
 				light = new THREE.DirectionalLight(0xffffff, 1);
 				light.position.set(2, 2, 5);
 				scene.add(light);
@@ -162,7 +188,7 @@
 					y = event.y;
 					console.log(`${x} + ${y}`);
 				};
-					
+
 				renderer = new THREE.WebGLRenderer({ antialias: true });
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				renderer.shadowMap.enabled = true;
@@ -190,17 +216,19 @@
 					if (y >= 190 && y <= 260) {
 						eye1.rotation.x = y * 0.01 - 0.63;
 						eye2.rotation.x = y * 0.01 - 0.63;
-					
 					}
-					
-					scalePlus();
-					if(mouth.scale.x >= 0.31){
-						scalePlus = 0;
+					if (decision == true) {
+						scalePlus();
+						if (mouth.scale.x >= 0.31) {
+							scalePlus = null;
+						}
 					}
-
+					talk();
 				}
+
 				animate();
 			}
+
 			init();
 		</script>
 	</body>
