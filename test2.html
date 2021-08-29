@@ -23,6 +23,9 @@
 			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
 			import { FBXLoader } from "/three/examples/jsm/loaders/FBXLoader.js";
 			import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
+			import { FlakesTexture } from "/three/examples/jsm/textures/FlakesTexture.js";
+			import { PlaneBufferGeometry } from "/three/src/geometries/PlaneGeometry.js";
+			import { MeshLambertMaterial } from "/three/src/materials/MeshLambertMaterial.js";
 
 			//-----------------------------------variables---------------------------------------------
 			let scene,
@@ -36,12 +39,13 @@
 				eye2,
 				scalePlus,
 				talk,
+				directionalLight,
 				mouth;
 
 			let x = 0,
 				y = 0;
 			let decision = false;
-
+			let cloudParticles = [];
 			const text =
 				"И снится нам не рокот космодрома... Не ээта ледянаая синеваа. А снится нам трава, трава у дома... Зеленая, зелёная трава.";
 			//---------------------------------change state------------------------------------------
@@ -52,26 +56,59 @@
 			//---------------------------------root function-----------------------------------------
 			function init() {
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color(0xdddddd);
+				// scene.background = new THREE.Color(0xdddddd);
+
 				camera = new THREE.PerspectiveCamera(
 					40,
 					window.innerWidth / window.innerHeight,
 					0.1,
 					2000
 				);
-				light = new THREE.DirectionalLight(0xffffff, 1);
-				light.position.set(2, 2, 5);
+				light = new THREE.DirectionalLight(0xffffff, 0.7);
+				light.position.set(2, 2, 3);
 				scene.add(light);
+
 				renderer = new THREE.WebGLRenderer({ antialias: true });
 				renderer.setSize(window.innerWidth, window.innerHeight);
 				renderer.shadowMap.enabled = true;
 				renderer.gammaOuput = true;
 				renderer.render(scene, camera);
+				scene.fog = new THREE.FogExp2(0x03544e, 0.0001);
+				renderer.setClearColor(scene.fog.color);
 				controls = new OrbitControls(camera, renderer.domElement);
-				camera.position.set(0, 0, 5);
+				camera.position.set(0, 0, 7);
 				camera.lookAt(0, 0, 0);
 				controls.update();
+				directionalLight = new THREE.DirectionalLight(0xff8c19, 1);
+				directionalLight.position.set(0, 0, 7);
+				scene.add(directionalLight);
+
 				document.body.appendChild(renderer.domElement);
+				//-----------------------------texture of background--------------------------------------
+				let loader = new THREE.TextureLoader();
+				loader.load("texture/smoke.png", function (texture) {
+					let cloudGeo = new THREE.PlaneBufferGeometry(5000, 5000);
+					let cloudMaterial = new THREE.MeshLambertMaterial({
+						map: texture,
+						transparent: true,
+					});
+
+					for (let p = 0; p < 50; p++) {
+						let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+
+						cloud.position.set(
+							Math.random() * 1500 - 1200,
+							500,
+							Math.random() * 1500 - 600
+						);
+						cloud.rotation.x = 1.16;
+						cloud.rotation.y = -0.12;
+						cloud.rotation.z = Math.random() * 2 * Math.PI;
+						cloud.material.opacity = 0.8;
+						cloudParticles.push(cloud);
+						scene.add(cloud);
+					}
+				});
 				//-------------------------------models-------------------------------------------------
 				loader = new GLTFLoader();
 				loader.load(
@@ -142,6 +179,7 @@
 						console.log("An error occurred");
 					}
 				);
+
 				//-----------------------------------eye rotation---------------------------------------
 				document.onmousemove = function (event) {
 					x = event.x;
@@ -183,13 +221,17 @@
 						}
 					}
 				};
-				setInterval(scalePlus, 100);
+				setInterval(scalePlus, 110);
 
 				//--------------------------------animate function---------------------------
 				function animate() {
+					renderer.render(scene, camera);
 					window.requestAnimationFrame(animate);
 					controls.update();
-					renderer.render(scene, camera);
+					cloudParticles.forEach((p) => {
+						p.rotation.z -= 0.001;
+					});
+
 					if (x <= 800 && x >= 470) {
 						eye1.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
 						eye2.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
