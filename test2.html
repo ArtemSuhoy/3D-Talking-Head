@@ -79,7 +79,7 @@
 				camera.position.set(0, 0, 7);
 				camera.lookAt(0, 0, 0);
 				controls.update();
-				directionalLight = new THREE.DirectionalLight(0xff8c19, 1);
+				directionalLight = new THREE.DirectionalLight(0xff8c19, 0.7);
 				directionalLight.position.set(0, 0, 7);
 				scene.add(directionalLight);
 
@@ -87,7 +87,7 @@
 				//-----------------------------texture of background--------------------------------------
 				let loader = new THREE.TextureLoader();
 				loader.load("texture/smoke.png", function (texture) {
-					let cloudGeo = new THREE.PlaneBufferGeometry(5000, 5000);
+					let cloudGeo = new THREE.PlaneBufferGeometry(4000, 4000);
 					let cloudMaterial = new THREE.MeshLambertMaterial({
 						map: texture,
 						transparent: true,
@@ -104,7 +104,7 @@
 						cloud.rotation.x = 1.16;
 						cloud.rotation.y = -0.12;
 						cloud.rotation.z = Math.random() * 2 * Math.PI;
-						cloud.material.opacity = 0.8;
+						cloud.material.opacity = 0.6;
 						cloudParticles.push(cloud);
 						scene.add(cloud);
 					}
