@@ -41,8 +41,7 @@
 			let x = 0,
 				y = 0;
 			let decision = false;
-			let synth = window.speechSynthesis;
-			let voices = synth.getVoices();
+
 			const text =
 				"И снится нам не рокот космодрома... Не ээта ледянаая синеваа. А снится нам трава, трава у дома... Зеленая, зелёная трава.";
 			//---------------------------------change state------------------------------------------
@@ -132,7 +131,7 @@
 						console.log(gltf);
 						mouth = gltf.scene.children[0];
 						mouth.scale.set(0.31, 0.31, 0.31);
-						mouth.position.set(0, -0.3, -0.51);
+						mouth.position.set(0, -0.3, -0.42);
 						scene.add(gltf.scene);
 						renderer.render(scene, camera);
 					},
@@ -150,6 +149,8 @@
 					console.log(`${x} + ${y}`);
 				};
 				//-----------------------------------other functions---------------------------------------
+				let synth = window.speechSynthesis;
+				let voices = synth.getVoices();
 				talk = () => {
 					if (decision == false) {
 						talk = null;
@@ -169,11 +170,15 @@
 					if (decision == false) {
 						scalePlus = null;
 					} else {
-						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.2) {
-							mouth.scale.x -= 0.04;
+						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.3) {
+							mouth.scale.x -= 0.004;
+							mouth.scale.y -= 0.01;
+							mouth.scale.z -= 0.019;
 						} else if (mouth.scale.x <= 0.31) {
 							scalePlus = () => {
-								mouth.scale.x += 0.04;
+								mouth.scale.x += 0.004;
+								mouth.scale.y += 0.01;
+								mouth.scale.z += 0.019;
 							};
 						}
 					}
