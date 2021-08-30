@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<button onclick="speechVoice()">Listening</button>
+		<script>
+			let synth = window.speechSynthesis;
+			let voices = synth.getVoices();
+			let recognizer = new webkitSpeechRecognition();
+			let result;
+			recognizer.interimResults = true;
+			recognizer.lang = "ru-RU";
+			const text = `Я очень рад с вами познакомится`;
+			const speech = new SpeechSynthesisUtterance(text);
+			speech.lang = "ru-RU";
+			speech.pitch = 0.1;
+			speech.rate = 1;
+			speech.voice = voices[60];
+			recognizer.onresult = function (event) {
+				result = event.results[event.resultIndex];
+				if (result.isFinal) {
+					console.log(result);
+					if (result[0].transcript == "Привет") {
+						speechSynthesis.speak(speech);
+					}
+				} else {
+					console.log("Variants are: ", result[0].transcript);
+				}
+			};
+			function speechVoice() {
+				recognizer.start();
+			}
+		</script>
+	</body>
 </html>
