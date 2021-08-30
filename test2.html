@@ -96,16 +96,16 @@
 						transparent: true,
 					});
 
-					for (let p = 0; p < 50; p++) {
+					for (let p = 0; p < 200; p++) {
 						let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
 
 						cloud.position.set(
-							Math.random() * 1500 - 1200,
+							Math.random() * 2000 - 1500,
 							500,
-							Math.random() * 1500 - 600
+							Math.random() * 2000 - 1500
 						);
-						cloud.rotation.x = 1.16;
-						cloud.rotation.y = -0.12;
+						cloud.rotation.x = 1;
+						cloud.rotation.y = -0.14;
 						cloud.rotation.z = Math.random() * 2 * Math.PI;
 						cloud.material.opacity = 0.6;
 						cloudParticles.push(cloud);
