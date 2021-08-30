@@ -46,20 +46,24 @@
 			let x = 0,
 				y = 0;
 			let decision = false;
+			
 			let synth = window.speechSynthesis;
 			let voices = synth.getVoices();
 			let cloudParticles = [];
+			
+			/*---------------------------------speech----------------------------------------*/
+
+
 			const text =
-				`came, I saw
-				I came, I saw
-				I praise the Lord, then break the law
-				I take what's mine, then take some more
-				It rains, it pours, it rains, it pours
-				I came, I saw
-				I came, I saw
-				I praise the Lord, then break the law
-				I take what's mine, then take some more
-				It rains, it pours, it rains, it pours`;
+				`came, I saw`;
+			const speech = new SpeechSynthesisUtterance(text);
+			speech.lang = "en-US";
+			speech.pitch = 0.1;
+			speech.rate = 1.2;
+			speech.voice = voices[60];
+			
+			
+			
 			//---------------------------------change state------------------------------------------
 			const clickEvent = document.getElementById("myDiv");
 			clickEvent.onclick = function () {
@@ -200,20 +204,13 @@
 				};
 				//-----------------------------------other functions---------------------------------------
 				talk = () => {
-					if(decision){
-						const speech = new SpeechSynthesisUtterance(text);
-						speech.lang = "en-US";
-						speech.pitch = 0.1;
-						speech.rate = 1.2;
-						speech.voice = voices[60];
+					if(decision == true){
 						speechSynthesis.speak(speech);
-						decision = false;	
+					} else if(decision == false){
+							speechSynthesis.cancel();
 					}
-				}
-				
-				stop = () =>{
-					synth.pause();
-				}
+				}	
+	
 				scalePlus = () => {
 					if (decision == false) {
 						scalePlus = null;
@@ -257,12 +254,8 @@
 							scalePlus = null;
 						}
 					}
-
-
-					if(decision == true){
-						talk();
-						decision == false;	
-					}
+					
+					talk();
 				}
 				animate();
 			}
