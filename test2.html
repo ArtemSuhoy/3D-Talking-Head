@@ -46,24 +46,20 @@
 			let x = 0,
 				y = 0;
 			let decision = false;
-			
+
 			let synth = window.speechSynthesis;
 			let voices = synth.getVoices();
 			let cloudParticles = [];
-			
+
 			/*---------------------------------speech----------------------------------------*/
 
-
-			const text =
-				`came, I saw`;
+			const text = `came, I saw`;
 			const speech = new SpeechSynthesisUtterance(text);
 			speech.lang = "en-US";
 			speech.pitch = 0.1;
 			speech.rate = 1.2;
 			speech.voice = voices[60];
-			
-			
-			
+
 			//---------------------------------change state------------------------------------------
 			const clickEvent = document.getElementById("myDiv");
 			clickEvent.onclick = function () {
@@ -204,13 +200,13 @@
 				};
 				//-----------------------------------other functions---------------------------------------
 				talk = () => {
-					if(decision == true){
+					if (decision == true) {
 						speechSynthesis.speak(speech);
-					} else if(decision == false){
-							speechSynthesis.cancel();
+					} else if (decision == false) {
+						speechSynthesis.cancel();
 					}
-				}	
-	
+				};
+
 				scalePlus = () => {
 					if (decision == false) {
 						scalePlus = null;
@@ -254,7 +250,7 @@
 							scalePlus = null;
 						}
 					}
-					
+
 					talk();
 				}
 				animate();
