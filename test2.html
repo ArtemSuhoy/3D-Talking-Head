@@ -39,15 +39,18 @@
 				eye2,
 				scalePlus,
 				talk,
+				stop,
 				directionalLight,
 				mouth;
 
 			let x = 0,
 				y = 0;
 			let decision = false;
+			let synth = window.speechSynthesis;
+			let voices = synth.getVoices();
 			let cloudParticles = [];
 			const text =
-				"И снится нам не рокот космодрома... Не ээта ледянаая синеваа. А снится нам трава, трава у дома... Зеленая, зелёная трава.";
+				"Hello Trond";
 			//---------------------------------change state------------------------------------------
 			const clickEvent = document.getElementById("myDiv");
 			clickEvent.onclick = function () {
@@ -187,23 +190,21 @@
 					console.log(`${x} + ${y}`);
 				};
 				//-----------------------------------other functions---------------------------------------
-				let synth = window.speechSynthesis;
-				let voices = synth.getVoices();
 				talk = () => {
-					if (decision == false) {
-						talk = null;
-					} else {
+					if(decision){
 						const speech = new SpeechSynthesisUtterance(text);
-						speech.lang = "ru-RU";
+						speech.lang = "en-US";
 						speech.pitch = 0.1;
 						speech.rate = 0.9;
 						speech.voice = voices[60];
-						speechSynthesis.speak(speech);
-						console.log("worked");
+						speechSynthesis.speak(speech);		
+						decision = false;				
 					}
-				};
-				talk();
-
+				}
+				
+				stop = () =>{
+					synth.pause();
+				}
 				scalePlus = () => {
 					if (decision == false) {
 						scalePlus = null;
@@ -246,6 +247,12 @@
 						if (mouth.scale.x >= 0.31) {
 							scalePlus = null;
 						}
+					}
+
+
+					if(decision == true){
+						talk();
+						decision == false;	
 					}
 				}
 				animate();
