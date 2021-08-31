@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <button onclick="speechVoice()"></button>
-    <script>
-        let speech;
-        let recognizer = new webkitSpeechRecognition();
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<button onclick="speechVoice()"></button>
+		<script>
+			let speech;
+			let recognizer = new webkitSpeechRecognition();
 
-        recognizer.interimResults = true;
+			recognizer.interimResults = true;
 
-        recognizer.lang = 'ru-Ru';
-        
-        recognizer.onresult = function (event){
-            let result = event.results[event.resultIndex];
+			recognizer.lang = "ru-Ru";
 
-            if(result.isFinal){
-                alert('You say: ' + result[0].transcript);
-            } else {
-                console.log('Intermediate result: ' + result[0].transcript);
-            }
+			recognizer.onresult = function (event) {
+				let result = event.results[event.resultIndex];
 
-        };
+				if (result.isFinal) {
+					alert("You say: " + result[0].transcript);
+				} else {
+					console.log("Intermediate result: " + result[0].transcript);
+				}
+			};
 
-        speechVoice = () => {
-            recognizer.start();
-        }
-        
-    </script>
-</body>
+			speechVoice = () => {
+				recognizer.start();
+			};
+		</script>
+	</body>
 </html>

@@ -18,30 +18,31 @@
 	</head>
 	<body>
 		<div id="myDiv"></div>
-		<button  onclick="speechVoice()">sdfdsfsdf</button>
+		<p id="list"></p>
+		<button onclick="speechVoice()">sdfdsfsdf</button>
 		<script>
 			let recognizer = new webkitSpeechRecognition();
 			let result;
-			let final = 'loh';
+			let final;
 			recognizer.interimResults = true;
 
-			recognizer.lang = 'ru-Ru';
+			recognizer.lang = "ru-Ru";
 
-			recognizer.onresult = function (event){
+			recognizer.onresult = function (event) {
 				result = event.results[event.resultIndex];
-				if(result.isFinal){
-					alert('You say: ' + result[0].transcript);
-					final = result[0].transcript;
+				if (result.isFinal) {
+					alert("You say: " + result[0].transcript);
+					final = document.getElementById("list");
+					final.innerHTML = result[0].transcript;
 				} else {
-					console.log('Intermediate result: ' + result[0].transcript);
+					console.log("Intermediate result: " + result[0].transcript);
 				}
 			};
 			let speechVoice;
 
 			speechVoice = () => {
 				recognizer.start();
-			}
-			
+			};
 		</script>
 		<script type="module">
 			import * as THREE from "/three/build/three.module.js";
@@ -52,19 +53,16 @@
 			import { PlaneBufferGeometry } from "/three/src/geometries/PlaneGeometry.js";
 			import { MeshLambertMaterial } from "/three/src/materials/MeshLambertMaterial.js";
 
-
 			//-----------------------------------variables---------------------------------------------
-			
+
 			//Orbit controls
 			let controls;
 
 			//Models
 			let root, eye1, eye2, mouth;
-			
 
 			// Creating scene
 			let scene, camera, renderer;
-
 
 			//Light
 			let light, directionalLight;
@@ -72,26 +70,24 @@
 			//Animation loaders
 			let loader;
 
-
 			// Coordinate
-			let x = 0, y = 0;
+			let x = 0,
+				y = 0;
 
 			// Function
 			let scaleMouth, talk;
 
 			//Background
 			let cloudParticles = [];
-			
+
 			// State
 			let decision = false;
-
-
 
 			/*---------------------------------speech----------------------------------------*/
 
 			let synth = window.speechSynthesis;
 
-			const text = `came, I saw`;
+			let text = document.getElementById("list").innerText;
 			const speech = new SpeechSynthesisUtterance(text);
 
 			speech.lang = "en-US";
@@ -99,15 +95,12 @@
 			speech.rate = 1.2;
 
 			//--------------------------------Recognizer-------------------------------------
-        	
-			
+
 			//---------------------------------change state------------------------------------------
 			const clickEvent = document.getElementById("myDiv");
 			clickEvent.onclick = function () {
 				decision = !decision;
 			};
-
-
 
 			//---------------------------------root function-----------------------------------------
 			function init() {
@@ -121,12 +114,10 @@
 					2000
 				);
 
-
 				// Light
 				light = new THREE.DirectionalLight(0xffffff, 0.7);
 				light.position.set(2, 2, 3);
 				scene.add(light);
-
 
 				//Renderer
 				renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -147,9 +138,7 @@
 				directionalLight.position.set(0, 0, 7);
 				scene.add(directionalLight);
 
-
 				document.body.appendChild(renderer.domElement);
-
 
 				//-----------------------------texture of background--------------------------------------
 
@@ -177,8 +166,6 @@
 						scene.add(cloud);
 					}
 				});
-				
-
 
 				//-------------------------------models-------------------------------------------------
 
@@ -201,7 +188,6 @@
 					}
 				);
 
-
 				//-------------------------------Eyes----------------------------------------
 
 				loader.load(
@@ -222,7 +208,6 @@
 					}
 				);
 
-
 				loader.load(
 					"eyes/scene.gltf",
 					function (gltf) {
@@ -240,8 +225,6 @@
 						console.log("An error occurred");
 					}
 				);
-
-
 
 				//---------------------------------------Mouth---------------------------------
 
@@ -263,14 +246,12 @@
 					}
 				);
 
-
-
 				//-----------------------------------eye rotation---------------------------------------
 
 				document.onmousemove = function (event) {
 					x = event.x;
 					y = event.y;
-					console.log(`${x} + ${y}`);
+					// console.log(`${x} + ${y}`);
 				};
 
 				//-----------------------------------other functions---------------------------------------
@@ -302,7 +283,6 @@
 				};
 				setInterval(scaleMouth, 110);
 
-				
 				//--------------------------------animate function---------------------------
 				function animate() {
 					renderer.render(scene, camera);
@@ -315,7 +295,7 @@
 					if (x <= 800 && x >= 470) {
 						eye1.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
 						eye2.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
-						console.log(`eye1 rotation ${eye1.rotation.z}`);
+						// console.log(`eye1 rotation ${eye1.rotation.z}`);
 					}
 					if (y >= 190 && y <= 260) {
 						eye1.rotation.x = y * 0.01 - 0.63;
@@ -329,6 +309,7 @@
 					}
 
 					talk();
+					// console.log(text);
 				}
 				animate();
 			}
