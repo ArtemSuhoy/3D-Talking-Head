@@ -7,34 +7,28 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<button onclick="speechVoice()">Listening</button>
+		<button onclick="speechVoice()"></button>
 		<script>
-			let synth = window.speechSynthesis;
-			let voices = synth.getVoices();
+			let speech;
 			let recognizer = new webkitSpeechRecognition();
-			let result;
+
 			recognizer.interimResults = true;
-			recognizer.lang = "ru-RU";
-			const text = `Я очень рад с вами познакомится`;
-			const speech = new SpeechSynthesisUtterance(text);
-			speech.lang = "ru-RU";
-			speech.pitch = 0.1;
-			speech.rate = 1;
-			speech.voice = voices[60];
+
+			recognizer.lang = "ru-Ru";
+
 			recognizer.onresult = function (event) {
-				result = event.results[event.resultIndex];
+				let result = event.results[event.resultIndex];
+
 				if (result.isFinal) {
-					console.log(result);
-					if (result[0].transcript == "Привет") {
-						speechSynthesis.speak(speech);
-					}
+					alert("You say: " + result[0].transcript);
 				} else {
-					console.log("Variants are: ", result[0].transcript);
+					console.log("Intermediate result: " + result[0].transcript);
 				}
 			};
-			function speechVoice() {
+
+			speechVoice = () => {
 				recognizer.start();
-			}
+			};
 		</script>
 	</body>
 </html>

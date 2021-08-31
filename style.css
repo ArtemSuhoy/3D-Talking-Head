@@ -4,3 +4,8 @@ body{
     margin: 0;
     overflow: hiddengit ;
 }
+
+button {
+    z-index:  1000;
+    position: absolute;
+}

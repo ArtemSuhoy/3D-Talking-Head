@@ -1,9 +1,21 @@
-import * as THREE from 'three';
+let speech;
+let recognizer = new webkitSpeechRecognition();
 
-const scene = new THREE.Scene();
+recognizer.interimResults = true;
 
+        recognizer.lang = 'ru-Ru';
+        
+        recognizer.onresult = function (event){
+            let result = event.results[event.resultIndex];
 
-// Option 2: Import just the parts you need.
-import { Scene } from 'three';
+            if(result.isFinal){
+                alert('You say: ' + result[0].transcript);
+            } else {
+                console.log('Intermediate result: ' + result[0].transcript);
+            }
 
-const scene = new Scene();
+        };
+
+        speechVoice = () => {
+            recognizer.start();
+        }
