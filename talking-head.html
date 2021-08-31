@@ -13,13 +13,18 @@
 				bottom: 0;
 				right: 0;
 				left: 0;
+				font-size= 10px;
+			}
+			button {
+				background-color: burlywood;
+				border-radius: 10px;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="myDiv"></div>
 		<p id="list"></p>
-		<button onclick="speechVoice()">sdfdsfsdf</button>
+		<button onclick="speechVoice()">Click</button>
 		<script>
 			let recognizer = new webkitSpeechRecognition();
 			let result;
@@ -33,7 +38,7 @@
 				if (result.isFinal) {
 					alert("You say: " + result[0].transcript);
 					final = document.getElementById("list");
-					final.innerHTML = result[0].transcript;
+					final.innerText = result[0].transcript;
 				} else {
 					console.log("Intermediate result: " + result[0].transcript);
 				}
@@ -87,12 +92,12 @@
 
 			let synth = window.speechSynthesis;
 
-			let text = document.getElementById("list").innerText;
+			let text = final;
 			const speech = new SpeechSynthesisUtterance(text);
 
-			speech.lang = "en-US";
+			speech.lang = "ru-Ru";
 			speech.pitch = 0.1;
-			speech.rate = 1.2;
+			speech.rate = 1;
 
 			//--------------------------------Recognizer-------------------------------------
 
