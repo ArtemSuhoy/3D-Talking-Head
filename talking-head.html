@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<title>3D-Head</title>
+		<style>
+			#myDiv {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="myDiv"></div>
+		<button  onclick="speechVoice()">sdfdsfsdf</button>
+		<script>
+			let recognizer = new webkitSpeechRecognition();
+			let result;
+			let final = 'loh';
+			recognizer.interimResults = true;
+
+			recognizer.lang = 'ru-Ru';
+
+			recognizer.onresult = function (event){
+				result = event.results[event.resultIndex];
+				if(result.isFinal){
+					alert('You say: ' + result[0].transcript);
+					final = result[0].transcript;
+				} else {
+					console.log('Intermediate result: ' + result[0].transcript);
+				}
+			};
+			let speechVoice;
+
+			speechVoice = () => {
+				recognizer.start();
+			}
+			
+		</script>
+		<script type="module">
+			import * as THREE from "/three/build/three.module.js";
+			import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
+			import { FBXLoader } from "/three/examples/jsm/loaders/FBXLoader.js";
+			import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
+			import { FlakesTexture } from "/three/examples/jsm/textures/FlakesTexture.js";
+			import { PlaneBufferGeometry } from "/three/src/geometries/PlaneGeometry.js";
+			import { MeshLambertMaterial } from "/three/src/materials/MeshLambertMaterial.js";
+
+
+			//-----------------------------------variables---------------------------------------------
+			
+			//Orbit controls
+			let controls;
+
+			//Models
+			let root, eye1, eye2, mouth;
+			
+
+			// Creating scene
+			let scene, camera, renderer;
+
+
+			//Light
+			let light, directionalLight;
+
+			//Animation loaders
+			let loader;
+
+
+			// Coordinate
+			let x = 0, y = 0;
+
+			// Function
+			let scaleMouth, talk;
+
+			//Background
+			let cloudParticles = [];
+			
+			// State
+			let decision = false;
+
+
+
+			/*---------------------------------speech----------------------------------------*/
+
+			let synth = window.speechSynthesis;
+
+			const text = `came, I saw`;
+			const speech = new SpeechSynthesisUtterance(text);
+
+			speech.lang = "en-US";
+			speech.pitch = 0.1;
+			speech.rate = 1.2;
+
+			//--------------------------------Recognizer-------------------------------------
+        	
+			
+			//---------------------------------change state------------------------------------------
+			const clickEvent = document.getElementById("myDiv");
+			clickEvent.onclick = function () {
+				decision = !decision;
+			};
+
+
+
+			//---------------------------------root function-----------------------------------------
+			function init() {
+				scene = new THREE.Scene();
+				// scene.background = new THREE.Color(0xdddddd);
+
+				camera = new THREE.PerspectiveCamera(
+					40,
+					window.innerWidth / window.innerHeight,
+					0.1,
+					2000
+				);
+
+
+				// Light
+				light = new THREE.DirectionalLight(0xffffff, 0.7);
+				light.position.set(2, 2, 3);
+				scene.add(light);
+
+
+				//Renderer
+				renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.shadowMap.enabled = true;
+				renderer.render(scene, camera);
+				scene.fog = new THREE.FogExp2(0x03544e, 0.0001);
+				renderer.setClearColor(scene.fog.color);
+
+				//Orbit controls
+				controls = new OrbitControls(camera, renderer.domElement);
+				camera.position.set(0, 0, 7);
+				camera.lookAt(0, 0, 0);
+				controls.update();
+
+				//Light
+				directionalLight = new THREE.DirectionalLight(0xff8c19, 0.7);
+				directionalLight.position.set(0, 0, 7);
+				scene.add(directionalLight);
+
+
+				document.body.appendChild(renderer.domElement);
+
+
+				//-----------------------------texture of background--------------------------------------
+
+				let loader = new THREE.TextureLoader();
+				loader.load("texture/smoke.png", function (texture) {
+					let cloudGeo = new THREE.PlaneBufferGeometry(4000, 4000);
+					let cloudMaterial = new THREE.MeshLambertMaterial({
+						map: texture,
+						transparent: true,
+					});
+
+					for (let p = 0; p < 200; p++) {
+						let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+
+						cloud.position.set(
+							Math.random() * 2000 - 1500,
+							500,
+							Math.random() * 2000 - 1500
+						);
+						cloud.rotation.x = 1;
+						cloud.rotation.y = -0.14;
+						cloud.rotation.z = Math.random() * 2 * Math.PI;
+						cloud.material.opacity = 0.6;
+						cloudParticles.push(cloud);
+						scene.add(cloud);
+					}
+				});
+				
+
+
+				//-------------------------------models-------------------------------------------------
+
+				loader = new GLTFLoader();
+				loader.load(
+					"male/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
+						root = gltf.scene.children[0];
+						root.scale.set(5, 5, 5);
+						root.position.set(0, -2.4, 0);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
+
+
+				//-------------------------------Eyes----------------------------------------
+
+				loader.load(
+					"eyes/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
+						eye1 = gltf.scene.children[0];
+						eye1.scale.set(0.01, 0.01, 0.01);
+						eye1.position.set(-0.47, 0.63, -0.93);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
+
+
+				loader.load(
+					"eyes/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
+						eye2 = gltf.scene.children[0];
+						eye2.scale.set(0.01, 0.01, 0.01);
+						eye2.position.set(0.47, 0.63, -0.93);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
+
+
+
+				//---------------------------------------Mouth---------------------------------
+
+				loader.load(
+					"mouth/scene.gltf",
+					function (gltf) {
+						console.log(gltf);
+						mouth = gltf.scene.children[0];
+						mouth.scale.set(0.31, 0.31, 0.31);
+						mouth.position.set(0, -0.3, -0.42);
+						scene.add(gltf.scene);
+						renderer.render(scene, camera);
+					},
+					function (xhr) {
+						console.log((xhr.loaded / xhr.total) * 100 + "% loader");
+					},
+					function (error) {
+						console.log("An error occurred");
+					}
+				);
+
+
+
+				//-----------------------------------eye rotation---------------------------------------
+
+				document.onmousemove = function (event) {
+					x = event.x;
+					y = event.y;
+					console.log(`${x} + ${y}`);
+				};
+
+				//-----------------------------------other functions---------------------------------------
+
+				talk = () => {
+					if (decision == true) {
+						speechSynthesis.speak(speech);
+					} else if (decision == false) {
+						speechSynthesis.cancel();
+					}
+				};
+
+				scaleMouth = () => {
+					if (decision == false) {
+						scaleMouth = null;
+					} else {
+						if (mouth.scale.x <= 0.31 && mouth.scale.x > 0.3) {
+							mouth.scale.x -= 0.004;
+							mouth.scale.y -= 0.01;
+							mouth.scale.z -= 0.019;
+						} else if (mouth.scale.x <= 0.31) {
+							scaleMouth = () => {
+								mouth.scale.x += 0.004;
+								mouth.scale.y += 0.01;
+								mouth.scale.z += 0.019;
+							};
+						}
+					}
+				};
+				setInterval(scaleMouth, 110);
+
+				
+				//--------------------------------animate function---------------------------
+				function animate() {
+					renderer.render(scene, camera);
+					window.requestAnimationFrame(animate);
+					controls.update();
+					cloudParticles.forEach((p) => {
+						p.rotation.z -= 0.001;
+					});
+
+					if (x <= 800 && x >= 470) {
+						eye1.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
+						eye2.rotation.z = -(x * 0.003) + (-0, 93); // 0.0025
+						console.log(`eye1 rotation ${eye1.rotation.z}`);
+					}
+					if (y >= 190 && y <= 260) {
+						eye1.rotation.x = y * 0.01 - 0.63;
+						eye2.rotation.x = y * 0.01 - 0.63;
+					}
+					if (decision == true) {
+						scaleMouth();
+						if (mouth.scale.x >= 0.31) {
+							scaleMouth = null;
+						}
+					}
+
+					talk();
+				}
+				animate();
+			}
+			//---------------------------------------start root function---------------------
+			init();
+		</script>
+	</body>
+</html>
